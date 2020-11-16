@@ -67,3 +67,40 @@ delimiter ;
 call movies_categories_count(60);
 
 
+
+
+-- afternoon
+-- Write a query to find what is the total business done by each store.
+select sto.store_id, sum(p.amount) from 
+payment as p 
+join staff sta 
+on p.staff_id = sta.staff_id
+join store sto 
+on sto.store_id = sta.store_id
+group by sto.store_id;
+
+
+-- Convert the previous query into a stored procedure.
+drop procedure if exists store_businesses;
+
+delimiter //
+create procedure store_businesses()
+begin 
+select sto.store_id, sum(p.amount) from 
+payment as p 
+join staff sta 
+on p.staff_id = sta.staff_id
+join store sto 
+on sto.store_id = sta.store_id
+group by sto.store_id;
+end;
+//
+delimiter ;
+
+call store_businesses();
+
+-- Convert the previous query into a stored procedure 
+-- that takes the input for store_id and displays the total sales for that store.
+
+
+
